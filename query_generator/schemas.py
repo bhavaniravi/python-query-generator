@@ -82,7 +82,10 @@ class SelectConfig(BaseModel):
         """
         value = self.field_name
         if self.transformation_function:
-            value = f"{self.transformation_function}({self.field_name})"
+            if self.transformation_function.upper() in ["YEAR", "MONTH", "DAY"]:
+                value = f"extract({self.transformation_function.upper()} from {self.field_name})"
+            else:
+                value = f"{self.transformation_function}({self.field_name})"
         return value if not self.select_as else f"{value} as {self.select_as}"
 
     def serialize_bigquery(self) -> str:
