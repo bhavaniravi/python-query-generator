@@ -94,3 +94,36 @@ class TestPostgresQueryGenerator:
             result.lower()
             == "SELECT department_name, avg(age) as avg_age FROM users GROUP BY department_name ORDER BY avg_age desc".lower()
         )
+
+    def test_run_query_with_filter_datetme(self):
+        filter_data = {
+            "name": "test_filter",
+            "config": {
+                "fields": [
+                    {"field_name": "name"},
+                    {"field_name": "age"},
+                    {"field_name": "department_name", "select_as": "department"},
+                ],
+                "source": "users",
+                "filters": [
+                    {
+                        "field": "joined_on",
+                        "operator": ">=",
+                        "value": "2022-10-02 12:00:00",
+                        "type": "datetime",
+                    },
+                    {
+                        "field": "joined_on",
+                        "operator": "<=",
+                        "value": "2023-10-02 12:00:00",
+                        "type": "datetime",
+                    },
+                ],
+            },
+        }
+        filter_data = QueryConfig(**filter_data)
+        result = self.query_service.get_query(filter_data)
+        assert (
+            result.lower()
+            == "SELECT name, age, department_name as department FROM users WHERE joined_on >= '2022-10-02'".lower()
+        )
