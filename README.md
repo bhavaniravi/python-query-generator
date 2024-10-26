@@ -21,10 +21,13 @@ This project is a work in progress and is not yet ready for production use.
 ## Installation
 
 ```bash
-pip install query-generator
+poetry shell
+poetry install
 ```
 
 ## Usage
+
+On a Python script type the following
 
 ```python
 
