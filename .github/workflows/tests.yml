@@ -1,0 +1,42 @@
+name: Unit Tests
+
+on:
+    push:
+    workflow_dispatch:
+
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        container: catthehacker/ubuntu:act-latest
+        strategy:
+            matrix:
+                python-version: [ "3.12" ]
+        steps:
+        -   name: Check out repository
+            uses: actions/checkout@v4
+
+        -   name: Install build dependencies
+            run: |
+                sudo apt-get update
+                sudo apt-get install -y build-essential libgmp-dev
+
+        -   name: Install uv
+            uses: astral-sh/setup-uv@v2
+
+        -   name: Set up Python ${{ matrix.python-version }}
+            run: uv python install ${{ matrix.python-version }}
+
+        -   name: Cache virtual environment
+            id: cached-poetry-dependencies
+            uses: actions/cache@v3
+            with:
+                path: .venv
+                key: venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/uv.lock') }}
+
+        -   name: Install dependencies
+            if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+            run: uv sync
+
+        -   name: Run pytest check
+            run: uv run pytest
