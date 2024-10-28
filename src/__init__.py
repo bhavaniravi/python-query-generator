@@ -1,0 +1,1 @@
+"""python-query-generator package."""

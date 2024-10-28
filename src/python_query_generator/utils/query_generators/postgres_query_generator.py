@@ -1,5 +1,5 @@
-from python_query_generator.schemas import Config, SelectConfig
-from python_query_generator.utils.query_generators.base_query_generator import (
+from src.python_query_generator.schemas import Config, SelectConfig
+from src.python_query_generator.utils.query_generators.base_query_generator import (
 	BaseQueryGenerator,
 )
 

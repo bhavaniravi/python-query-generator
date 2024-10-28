@@ -1,5 +1,5 @@
-from python_query_generator.schemas import QueryConfig
-from python_query_generator.services.query_service import QueryGenerator
+from src.python_query_generator.schemas import QueryConfig
+from src.python_query_generator.services.query_service import QueryGenerator
 
 
 class TestBigQueryQueryGenerator:

@@ -1,6 +1,5 @@
-from sqlalchemy import Connection, create_engine
-
 from python_query_generator.utils.connections.base_connection import BaseConnection
+from sqlalchemy import Connection, create_engine
 
 
 class PostgresConnection(BaseConnection):

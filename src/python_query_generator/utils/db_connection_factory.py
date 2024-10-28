@@ -1,14 +1,13 @@
 from collections.abc import Mapping
 from typing import Any
 
+from connections.bigquery_connection import BigQueryConnection
+from connections.mongo_connection import MongoConnection
+from connections.postgres_connection import PostgresConnection
 from google.cloud.bigquery import Client  # type: ignore
 from pymongo.synchronous.database import Database  # type: ignore
+from python_query_generator.config import Settings
 from sqlalchemy import Connection  # type: ignore
-
-from python_query_generator.config.settings import Settings
-from python_query_generator.utils.connections.bigquery_connection import BigQueryConnection
-from python_query_generator.utils.connections.mongo_connection import MongoConnection
-from python_query_generator.utils.connections.postgres_connection import PostgresConnection
 
 
 class DBConnectionFactory:

@@ -3,7 +3,6 @@ from typing import Any
 
 from pymongo import MongoClient  # type: ignore
 from pymongo.synchronous.database import Database  # type: ignore
-
 from python_query_generator.utils.connections.base_connection import BaseConnection
 
 

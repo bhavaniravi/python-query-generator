@@ -1,7 +1,7 @@
 from typing import Any
 
-from python_query_generator.schemas import Config, QueryConfig
-from python_query_generator.utils.query_generator_factory import QueryGeneratorFactory
+from src.python_query_generator.schemas import Config, QueryConfig
+from src.python_query_generator.utils import QueryGeneratorFactory
 
 
 class QueryGenerator:

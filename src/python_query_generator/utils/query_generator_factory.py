@@ -1,12 +1,6 @@
-from python_query_generator.utils.query_generators.bigquery_query_generator import (
-	BigQueryQueryGenerator,
-)
-from python_query_generator.utils.query_generators.mongo_query_generator import (
-	MongoQueryGenerator,
-)
-from python_query_generator.utils.query_generators.postgres_query_generator import (
-	PostgresQueryGenerator,
-)
+from .query_generators.bigquery_query_generator import BigQueryQueryGenerator
+from .query_generators.mongo_query_generator import MongoQueryGenerator
+from .query_generators.postgres_query_generator import PostgresQueryGenerator
 
 
 class QueryGeneratorFactory:

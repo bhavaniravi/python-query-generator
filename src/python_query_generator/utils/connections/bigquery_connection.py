@@ -1,5 +1,4 @@
 from google.cloud import bigquery  # type: ignore
-
 from python_query_generator.utils.connections.base_connection import BaseConnection
 
 

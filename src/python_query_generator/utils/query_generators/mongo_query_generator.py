@@ -1,7 +1,7 @@
 from typing import Any
 
-from python_query_generator.schemas import Config
-from python_query_generator.utils.query_generators.base_query_generator import (
+from src.python_query_generator.schemas import Config
+from src.python_query_generator.utils.query_generators.base_query_generator import (
 	BaseQueryGenerator,
 )
 
