@@ -1,0 +1,52 @@
+name: Code Formatting and Linting
+
+on:
+    pull_request:
+        branches: [ master, main ]
+    workflow_dispatch:
+
+
+jobs:
+    formatting:
+        runs-on: ubuntu-latest
+        container: catthehacker/ubuntu:act-latest
+        strategy:
+            matrix:
+                python-version: [ "3.12" ]
+        steps:
+            -   name: Check out repository
+                uses: actions/checkout@v4
+
+            -   name: Install build dependencies
+                run: |
+                    sudo apt-get update
+                    sudo apt-get install -y build-essential libgmp-dev
+
+            -   name: Install uv
+                uses: astral-sh/setup-uv@v2
+
+            -   name: Set up Python ${{ matrix.python-version }}
+                run: uv python install ${{ matrix.python-version }}
+
+            -   name: Cache virtual environment
+                id: cached-poetry-dependencies
+                uses: actions/cache@v3
+                with:
+                    path: .venv
+                    key: venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/uv.lock') }}
+
+            -   name: Install dependencies
+                if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+                run: uv sync
+
+            -   name: Set up Python 3.12
+                uses: actions/setup-python@v5
+                with:
+                    python-version: '3.12'
+
+            -   name: 🚨 pre-commit
+                uses: pre-commit/action@v3.0.0
+
+
+            -   name: 🩺 Run linter
+                run: uv run ruff check ./src
