@@ -1,6 +1,6 @@
 class QueryBuilderError(Exception):
-    pass
+	pass
 
 
 class ConfigNotFoundError(QueryBuilderError):
-    pass
+	pass
