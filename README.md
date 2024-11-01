@@ -72,13 +72,16 @@ To use the `python-query-generator`, you can initialize the `QueryGenerator` cla
 from query_generator.services.query_service import QueryGenerator
 
 query = {
-		"filters": [
+		"name": "example",
+        "config": {
+		     "filters": [
 				{
 						"field"    : "name",
 						"operation": "eq",
 						"value"    : "John Doe"
 				}
-		]
+		]   
+        }
 }
 
 query_generator = QueryGenerator(db_type="postgresql")
