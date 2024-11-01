@@ -1,49 +1,89 @@
 # Python Query Generator
 
-This project is built to have a centralized JSON schema for filter configuration on the front-end that can be directly serialized into a query on the backend.
+This project centralizes a JSON schema for filter configuration on the frontend, allowing direct serialization into
+backend queries.
 
-This project is a work in progress and is not yet ready for production use.
+> **Note:** This project is under active development and is not ready for production use.
 
-## Todo
+## Features & To-Do
 
-- [x] Create a basic JSON schema using pydantic
-- [x] Create a basic query generator for postgres, mongo and bigquery
-- [ ] Add support for more complex queries
-- [ ] Id based transformation field mapping
-- [ ] Add support for more databases (elasticsearch, snowflake, redshift)
-- [ ] Add support for more complex filter types (date range, number range, etc)
-- [ ] Add support for more complex filter operations (AND, OR, NOT)
+- [x] Basic JSON schema for filters using Pydantic.
+- [x] Query generation for PostgreSQL, MongoDB, and BigQuery.
+- [ ] Advanced queries (complex transformations, aggregations).
+- [ ] ID-based transformation for field mapping.
+- [ ] Additional database support (Elasticsearch, Snowflake, Redshift).
+- [ ] Complex filter types (date range, number range).
+- [ ] Logical filter operations (AND, OR, NOT).
 
-### Tech Debt
+### Technical Debt
 
-- [ ] Rewrite the query generator as a part of the pydantic model. I believe this will make the code more maintainable and easier to understand.
+- [ ] Refactor query generation to be part of the Pydantic model for maintainability and clarity.
 
-## Installation
+## Installation with `uv`
+
+The `uv` package manager, known for its speed and Rust-based efficiency, is required to set up this project. You can
+install `uv` by following one of these methods:
+
+- **Linux/macOS**:
+  ```bash
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  ```
+- **macOS via Homebrew**:
+  ```bash
+  brew install uv
+  ```
+- **Windows**:
+  ```powershell
+  powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+  ```
+- **Using Pip** (alternative method):
+  ```bash
+  pip install uv
+  ```
+
+Once installed, verify by checking the version:
 
 ```bash
-poetry shell
-poetry install
+uv --version
 ```
+
+## Setting Up the Project
+
+1. **Setting up virtual environment**:
+   ```bash
+   uv sync
+   ```
+
+2. **Activate the Environment**:
+    - **Linux/macOS**:
+      ```bash
+      source .venv/bin/activate
+      ```
+    - **Windows**:
+      ```powershell
+      .\.venv\Scripts\activate
+      ```
 
 ## Usage
 
-On a Python script type the following
+To use the `python-query-generator`, you can initialize the `QueryGenerator` class and pass a JSON filter configuration:
 
 ```python
-
-from query_generator import QueryGenerator
+from query_generator.services.query_service import QueryGenerator
 
 query = {
-    "filters": [
-        {
-            "field": "name",
-            "operation": "eq",
-            "value": "John Doe"
+		"name": "example",
+        "config": {
+		     "filters": [
+				{
+						"field"    : "name",
+						"operation": "eq",
+						"value"    : "John Doe"
+				}
+		]   
         }
-    ]
 }
 
-query_generator = QueryGenerator()
-query_generator.generate_query(query)
-
+query_generator = QueryGenerator(db_type="postgresql")
+print(query_generator.get_query(query))
 ```
