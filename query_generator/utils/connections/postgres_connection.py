@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+
 from query_generator.utils.connections.base_connection import BaseConnection
 
 
