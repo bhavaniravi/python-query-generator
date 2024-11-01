@@ -132,7 +132,7 @@ class TestMongoQueryGenerator:
 			},
 			{
 				"$group": {"_id": {"department_name": "$department_name"}},
-			},  # noqa
+			},
 			{
 				"$sort": {"avg_age": -1},
 			},

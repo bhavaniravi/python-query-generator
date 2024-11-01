@@ -95,7 +95,7 @@ class TestPostgresQueryGenerator:
 			== "SELECT department_name, avg(age) as avg_age FROM users GROUP BY department_name ORDER BY avg_age desc".lower()
 		)
 
-	def test_run_query_with_filter_datetime(self):
+	def test_run_query_with_filter_datetme(self):
 		filter_data = {
 			"name": "test_filter",
 			"config": {

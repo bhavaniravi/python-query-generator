@@ -1,24 +1,25 @@
-from query_generator.utils.query_generators.base_query_generator import (
-	BaseQueryGenerator,
-)
+from query_generator.schemas import Config, SelectConfig
+from query_generator.utils.query_generators.base_query_generator import BaseQueryGenerator
 
 
-def format_value(value):
+def format_value(value: str | list | SelectConfig | float | bool | None) -> str:
 	if isinstance(value, str):
 		return f"'{value}'"
-	elif value is None:
+	if value is None:
 		return "NULL"
-	elif isinstance(value, list):
+	if isinstance(value, list):
 		return f"({', '.join(format_value(v) for v in value)})"
 	return str(value)
 
 
 class PostgresQueryGenerator(BaseQueryGenerator):
-	def generate_query(self, config):
+	def generate_query(self, config: Config) -> str:
+		assert config.fields is not None, "Fields are required for Postgres query generation"
+
 		source = config.source
 		fields = ", ".join([f.serialize_postgres() for f in config.fields])
 
-		query = f"SELECT {fields} FROM {source}"
+		query = f"SELECT {fields} FROM {source}"  # noqa: S608
 
 		for join in config.joins:
 			conditions = f"{join.table}.{join.foreign_field} = {source}.{join.local_field}"

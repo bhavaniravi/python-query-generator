@@ -1,4 +1,8 @@
-from pymongo import MongoClient
+from collections.abc import Mapping
+from typing import Any
+
+from pymongo import MongoClient  # type: ignore
+from pymongo.synchronous.database import Database  # type: ignore
 
 from query_generator.utils.connections.base_connection import BaseConnection
 
@@ -8,6 +12,6 @@ class MongoConnection(BaseConnection):
 		self.connection_string = connection_string
 		self.database_name = database_name
 
-	def connect(self):
-		client = MongoClient(self.connection_string)
+	def connect(self) -> Database[Mapping[str, Any]]:
+		client: MongoClient = MongoClient(self.connection_string)
 		return client[self.database_name]
