@@ -57,10 +57,13 @@ class MongoQueryGenerator(BaseQueryGenerator):
             group_stage = {
                 "$group": {
                     "_id": {field: f"${field}" for field in group.groupby_fields}
+                },
+                "doc": {
+                        "$first": "$$ROOT"
                 }
             }
             pipeline.append(group_stage)
-
+            pipeline.append({"$replaceRoot": {"newRoot": "$doc"}}) # Replace root with the original document
         sort = config.sort
         if sort:
             sort_stage = {
