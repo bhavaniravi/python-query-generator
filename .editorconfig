@@ -17,7 +17,7 @@ indent_size = 4
 
 
 [*.py]
-indent_style = tab
+indent_style = space
 indent_size = 4
 ij_python_from_import_parentheses_force_if_multiline = true
 charset = utf-8
