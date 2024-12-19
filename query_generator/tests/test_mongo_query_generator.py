@@ -131,7 +131,13 @@ class TestMongoQueryGenerator:
             },
             {
                 "$group": {"_id": {"department_name": "$department_name"}},
+                "doc": {
+                        "$first": "$$ROOT"
+                }
             },  # noqa
+            {
+                    "$replaceRoot": {"newRoot": "$doc"}
+            },
             {
                 "$sort": {"avg_age": -1},
             },
